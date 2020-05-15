@@ -53,66 +53,47 @@ Token* TokenScanner::Scan(FILE* f)
 					str = str.substr(0, str.length() - 1);
 					tokenptr->type = ENDFILE;
 					break;
-
-					/* 当前字符c为"=",当前识别单词返回值currentToken设置为等号单词EQ */
 				case '=':
 					tokenptr->type = EQ;
 					break;
-
-					/* 当前字符c为"<",当前识别单词返回值currentToken设置为小于单词LT */
 				case '<':
 					tokenptr->type = LT;
 					break;
-
-					/* 当前字符c为"+",当前识别单词返回值currentToken设置为加号单词PLUS */
 				case '+':
 					tokenptr->type = PLUS;
 					break;
-
-					/* 当前字符c为"-",当前识别单词返回值currentToken设置为减号单词MINUS */
 				case '-':
 					tokenptr->type = MINUS;
 					break;
-
-					/* 当前字符c为"*",当前识别单词返回值currentToken设置为乘号单词TIMES */
 				case '*':
 					tokenptr->type = TIMES;
 					break;
-
-					/* 当前字符c为"/",当前识别单词返回值currentToken设置为除号单词OVER */
 				case '/':
 					tokenptr->type = OVER;
 					break;
 
-					/* 当前字符c为"(",当前识别单词返回值currentToken设置为左括号单词LPAREN */
 				case '(':
 					tokenptr->type = LPAREN;
 					break;
 
-					/* 当前字符c为")",当前识别单词返回值currentToken设置为右括号单词RPAREN */
 				case ')':
 					tokenptr->type = RPAREN;
 					break;
 
-					/* 当前字符c为";",当前识别单词返回值currentToken设置为分号单词SEMI */
 				case ';':
 					tokenptr->type = SEMI;
 					break;
-					/* 当前字符c为",",当前识别单词返回值currentToken设置为逗号单词COMMA */
 				case ',':
 					tokenptr->type = COMMA;
 					break;
-					/* 当前字符c为"[",当前识别单词返回值currentToken设置为左中括号单词LMIDPAREN */
+				
 				case '[':
 					tokenptr->type = LMIDPAREN;
 					break;
 
-					/* 当前字符c为"]",当前识别单词返回值currentToken设置为右中括号单词RMIDPAREN */
 				case ']':
 					tokenptr->type = RMIDPAREN;
 					break;
-
-					/* 当前字符c为其它字符,当前识别单词返回值currentToken设置为错误单词ERROR */
 				default:
 					tokenptr->type = ERROR;
 					Error = true;
@@ -142,8 +123,6 @@ Token* TokenScanner::Scan(FILE* f)
 			if (c == '=')
 				tokenptr->type = ASSIGN;
 
-			/* 当前字符c为其它字符,即":"后不是"=",在输入行缓冲区中回退一个字符       *
-			 * 字符存储状态save设置为FALSE,当前识别单词返回值currentToken设置为ERROR */
 			else
 			{
 				fseek(f,-1, SEEK_CUR);
@@ -157,12 +136,8 @@ Token* TokenScanner::Scan(FILE* f)
 			str += c;
 			state = DONE;
 
-			/* 当前字符c为".",当前识别单词返回值currentToken设置为下标界UNDERANGE */
 			if (c == '.')
 				tokenptr->type = UNDERANGE;
-
-			/* 当前字符c为其它字符,即"."后不是".",在输入行缓冲区中回退一个字符       *
-			 * 字符存储状态save设置为FALSE,当前识别单词返回值currentToken设置为ERROR */
 
 			else
 			{
@@ -173,9 +148,6 @@ Token* TokenScanner::Scan(FILE* f)
 			break;
 		case INNUM:
 
-			/* 当前字符c不是数字,则在输入行缓冲区源中回退一个字符					*
-			 * 字符存储标志设置为FALSE,当前DFA状态state设置为DONE,数字单词识别完成 *
-			 * 当前识别单词返回值currentToken设置为数字单词NUM                     */
 			str += c;
 			if (!isdigit(c))
 			{
@@ -213,9 +185,6 @@ Token* TokenScanner::Scan(FILE* f)
 
 		case INID:
 			str += c;
-			/* 当前字符c不是字母,则在输入行缓冲区源中回退一个字符		 			  *
-			 * 字符存储标志设置为FALSE,当前DFA状态state设置为DONE,标识符单词识别完成 *
-			 * 当前识别单词返回值currentToken设置为标识符单词ID                      */
 			if (!isalnum(c))
 			{
 				fseek(f, -1, SEEK_CUR);
@@ -237,7 +206,6 @@ Token* TokenScanner::Scan(FILE* f)
 	if (state == DONE)
 	{
 
-		/* 当前单词currentToken为标识符单词类型,查看其是否为保留字单词 */
 		if (tokenptr->type == ID)
 		{
 			tokenptr->type = ReservedLookup(str);

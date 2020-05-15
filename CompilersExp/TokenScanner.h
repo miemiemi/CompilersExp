@@ -1,5 +1,4 @@
 #pragma once
-#include "Scanner.h"
 #include "token.h"
 
 static struct
@@ -21,17 +20,11 @@ typedef enum
 StateType;
 
 
-class TokenScanner :
-	public Scanner
+class TokenScanner 
 {
 public:
 	Token* Scan(FILE* f);
 	LexType ReservedLookup(string str);			//判断是是否为保留字
-	//void AddIdentifier(string str);//查表，若没有将该标识符加入表中
-	//void AddConstant(string str);
-	//bool Isother(char a);//判断是否为字母和数字以外其他的
-	//bool Isletter(char a);
-	//bool Isnumber(char a);
 
 	int Line = 1;
 	//标识符表和常量表，用于保存一个程序的所有标识符和常量

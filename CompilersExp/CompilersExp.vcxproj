@@ -148,12 +148,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="Token.cpp" />
     <ClCompile Include="TokenScanner.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scanner.h" />
     <ClInclude Include="TokenScanner.h" />
     <ClInclude Include="Token.h" />
     <ClInclude Include="Global.h" />
