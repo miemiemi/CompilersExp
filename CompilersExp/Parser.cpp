@@ -60,7 +60,7 @@ void Parser::Parse(vector<Token>& Tokenlist)
 					cout << "行数：" << lineno << "    没有相应产生式，错误" << endl;
 					this->Error = true;
 				}
-				this->predict(pnum);
+				predict(pnum);
 			}
 		}
 
@@ -72,6 +72,7 @@ void Parser::Parse(vector<Token>& Tokenlist)
 }
 
 void Parser::predict(int pnum) {
+	
 	if (pnum == 1)
 		process1();
 	else if (pnum == 2)
@@ -298,10 +299,13 @@ int Parser::Priosity(LexType op) {
 //产生式： <Program>  :: = ProgramHead  DeclarePart  ProgramBody
 void Parser::process1()
 {
-	symbol.push(ProgramHead);
-	symbol.push(DeclarePart);
+	symbol.push(DOT);
 	symbol.push(ProgramBody);
+	symbol.push(DeclarePart);
+	symbol.push(ProgramHead);
+
 }
+
 //产生式：<ProgramHead>  ::= PROGRAM ProgramName 
 void Parser::process2()
 {
@@ -313,101 +317,173 @@ void Parser::process2()
 	*(t) = currentP;
 }
 
+//产生式： <ProgramName> ::=  ID;   
 void Parser::process3()
 {
+	symbol.push(ID);
 
+	currentP->name[currentP->idnum] = currentToken.content;
+	currentP->idnum++;
 }
 
+//产生式： <DeclarePart> ::= TypeDec  VarDec  FuncDec 
 void Parser::process4()
 {
-
+	symbol.push(ProcDec);
+	symbol.push(VarDec);
+	symbol.push(TypeDec);
 }
 
+//产生式： <TypeDec> :: = ε
 void Parser::process5()
 {
-
+	//空函数
 }
-
+//产生式： <TypeDec> ::= TypeDeclaration 
 void Parser::process6()
 {
-
+	symbol.push(TypeDeclaration);	
 }
 
+//产生式： <TypeDeclaration> :: = TYPE TypeDecList
 void Parser::process7()
 {
+	symbol.push(TypeDecList);
+	symbol.push(TYPE);
 
+
+	TreeNode** t = tree.top();
+	tree.pop();
+	currentP = new TreeNode(this->lineno, TypeK); /*生成Type作为标志的结点，它的子结点都是类型声明*/
+	(*t) = currentP;							 /*头结点的兄弟结点指针指向此结点*/
+	tree.push(&((*currentP).sibling));			/* 压入指向变量声明节点的指针*/
+	tree.push(&((*currentP).child[0]));			 /*压入指向第一个类型声明节点的指针*/
 }
-
+//产生式： <TypeDecList> ::= TypeId = TypeDef ; TypeDecMore 
 void Parser::process8()
 {
+	symbol.push(TypeDecMore);
+	symbol.push(SEMI);
+	symbol.push(TypeName);
+	symbol.push(EQ);
+	symbol.push(TypeId);
 
+	TreeNode** t = tree.top();
+	tree.pop();
+	currentP = new TreeNode(this->lineno, DecK); /*生成一个表示类型声明的结点，不添任何信息*/
+
+	(*t) = currentP;			 /*若是第一个，则是Type类型的子结点指向当前结点， 否则，是上一个类型声明的兄弟结点*/
+
+	tree.push(&((*currentP).sibling));
 }
-
+//产生式：<TypeDecMore> :: = ε
 void Parser::process9()
 {
-
+	tree.pop();					/*没有其它的类型声明，这时语法树栈顶存放的是最后一个类型声明节点的兄弟节点，弹出*/
 }
-
+//产生式： <TypeDecMore> ::=  TypeDecList  
 void Parser::process10()
 {
-
+	symbol.push(TypeDecList);
 }
 
+//产生式： <TypeId >  ::=  ID 
 void Parser::process11()
 {
+	symbol.push(ID);
+
+	currentP->name[currentP->idnum] = currentToken.content;
+	currentP->idnum++;
 
 }
-
+//产生式： <TypeDef> ::=  BaseType 
 void Parser::process12()
 {
+	symbol.push(BaseType);
+
+	/*由于数组基类型的问题，这里不能直接用currentP->kind.dec=IntegerK; 而应该这么做，以适应所有情形*/
+	this->dectemp = &(currentP->kind.dec);
 
 }
-
+//产生式： <TypeDef > ::=   StructureType 
 void Parser::process13()
 {
-
+	symbol.push(StructureType);
 }
 
+//产生式： <TypeDef> ::=  ID 
 void Parser::process14()
 {
+	symbol.push(ID);
 
+	/*声明的类型部分为类型标识符*/
+	(*currentP).kind.dec = IdK;
+	currentP->type_name = currentToken.content;
 }
 
+//产生式：  <BaseType> :: = INTEGER
 void Parser::process15()
 {
+	symbol.push(INTEGER);
 
+	/*声明的类型部分为整数类型*/
+	(*this->dectemp) = IntegerK;
 }
 
+//产生式： <BaseType> ::=   CHAR 
 void Parser::process16()
 {
+	symbol.push(CHAR);
 
+	/*声明的类型部分为整数类型*/
+	(*this->dectemp) = CharK;
 }
-
+//产生式： <StructureType> :: = ArrayType
 void Parser::process17()
 {
-
+	symbol.push(ArrayType);
 }
-
+//产生式：  <StructureType> ::= RecType  
 void Parser::process18()
 {
-
+	symbol.push(RecType);
 }
-
+//产生式： <ArrayType> ::= ARRAY [low..top ] OF BaseType 
 void Parser::process19()
 {
+	symbol.push(BaseType);
+	symbol.push(OF);
+	symbol.push(RMIDPAREN);
+	symbol.push(Top);
+	symbol.push(UNDERANGE);
+	symbol.push(Low);
+	symbol.push(LMIDPAREN);
+	symbol.push(ARRAY);
 
+	/*声明的类型为数组类型*/
+	(*currentP).kind.dec = ArrayK;
+
+	dectemp = &(currentP->attr.arrayAttr.childType);
 }
 
+//产生式： <Low>   ::=  INTC  
 void Parser::process20()
 {
+	symbol.push(INTC);
 
+	/*存储数组的下界*/
+	(*currentP).attr.arrayAttr.low = std::stoi(currentToken.content);
 }
-
+//产生式： <Top>  ::=  INTC  
 void Parser::process21()
 {
+	symbol.push(INTC);
+
+	/*存储数组的上界*/
+	(*currentP).attr.arrayAttr.up = std::stoi(currentToken.content);
 
 }
-
+//产生式： <RecType > ::=  RECORD  FieldDecList  END 
 void Parser::process22()
 {
 

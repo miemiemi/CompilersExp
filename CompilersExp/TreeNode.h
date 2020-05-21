@@ -41,7 +41,7 @@ struct Kind {
 struct ArrayAttr {
 	int low;//数组下界
 	int up;//数组上界
-	string childType;//数组元素类型
+	Dec childType;//数组元素类型
 };
 
 //过程声明时记录参数信息

@@ -30,13 +30,13 @@ public:
 
 	/*当前单词*/
 	Token  currentToken;
-	/*LL1分析表*/
-	//int LL1Table[TABLESIZE][TABLESIZE];
+
 	/*纪录当前语法树节点*/
 	TreeNode* currentP;
 	/*保存当前指针，以便修改后，将其恢复*/
 	TreeNode* saveP;
-
+	/*指向某语法树节点Kind->dec域的指针*/
+	Dec* dectemp;
 	/*纪录表达式中，未匹配的左括号数目*/
 	int  expflag;
 
