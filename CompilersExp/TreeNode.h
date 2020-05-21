@@ -76,13 +76,15 @@ public:
 
 	Kind kind;//语法树具体结点，包含了声明、语句、表达式三种
 
-	int idnum;//一个结点中标识符个数
+	int idnum = 0;//一个结点中标识符个数
 	string name[10];//标识符名称
 	symbtable* table[10];//标识符在标识符表中对应的数组下标
 
 	string type_name;//如果是声明结点，记录声明的类型
 
 	Attr attr;//当结点为数组声明、过程声明、表达式时用于记录额外信息
+
+	TreeNode(int lineno, Nodekind nodekind);
 
 };
 

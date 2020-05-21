@@ -19,8 +19,7 @@ void Parser::Parse(vector<Token>& Tokenlist)
 	int t[67][42];
 	LL1_init(t);
 	this->symbol.push(Program);//可以直接压入vt或lextape，会自动调用构造函数
-	this->root = new TreeNode();
-	this->root->nodekind = ProK;
+	this->root = new TreeNode(1, ProK);
 	this->tree.push(&(this->root->child[2]));
 	this->tree.push(&(this->root->child[1]));
 	this->tree.push(&(this->root->child[0]));
@@ -306,14 +305,12 @@ void Parser::process1()
 //产生式：<ProgramHead>  ::= PROGRAM ProgramName 
 void Parser::process2()
 {
-	//symbol.push(ProgramName);
-	//symbol.push(PROGRAM);
-	//TreeNode** t = tree.top();
-	//tree.pop();
-	////currentP = new TreeNode();
-	//t = new TreeNode();
-	////currentP = newPheadNode();
-	////(*t) = currentP;
+	symbol.push(ProgramName);
+	symbol.push(PROGRAM);
+	TreeNode** t = tree.top();
+	tree.pop();
+	currentP = new TreeNode(this->lineno,PheadK);
+	*(t) = currentP;
 }
 
 void Parser::process3()
