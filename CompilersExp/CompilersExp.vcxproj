@@ -19,20 +19,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\LL1_table.cpp" />
-    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\main.cpp" />
-    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\Parser.cpp" />
-    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\stdafx.cpp" />
-    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\TokenScanner.cpp" />
+    <ClInclude Include="LL1_table.h" />
+    <ClInclude Include="Parser.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Token.h" />
+    <ClInclude Include="TokenScanner.h" />
+    <ClInclude Include="TreeNode.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\LL1_table.h" />
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\Parser.h" />
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\stdafx.h" />
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\targetver.h" />
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\Token.h" />
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\TokenScanner.h" />
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\TreeNode.h" />
+    <ClCompile Include="LL1_table.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="TokenScanner.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

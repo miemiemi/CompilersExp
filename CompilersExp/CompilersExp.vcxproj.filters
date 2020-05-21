@@ -15,43 +15,40 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\LL1_table.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\Parser.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\stdafx.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\TokenScanner.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+    <ClInclude Include="LL1_table.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Token.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenScanner.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeNode.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\LL1_table.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\Parser.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\stdafx.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\targetver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\Token.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\TokenScanner.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\TreeNode.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <ClCompile Include="LL1_table.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TokenScanner.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

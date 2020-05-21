@@ -67,11 +67,11 @@ struct Attr {
 class TreeNode
 {
 public:
-	TreeNode * child[3] = { NULL,NULL,NULL };//指向子节点语法树
-	TreeNode*sibling = NULL;//指向兄弟结点（并列的多个语句）
+	TreeNode* child[3] = { NULL,NULL,NULL };//指向子节点语法树
+	TreeNode* sibling = NULL;//指向兄弟结点（并列的多个语句）
 
 	int lineno;//在源程序对应行号
-	
+
 	Nodekind nodekind;
 
 	Kind kind;//语法树具体结点，包含了声明、语句、表达式三种

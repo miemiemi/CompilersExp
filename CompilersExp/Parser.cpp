@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Parser.h"
 
-
 //符号栈和语法树栈的初始化
 Parser::Parser() {
 	stack<Symbol> symbol;
