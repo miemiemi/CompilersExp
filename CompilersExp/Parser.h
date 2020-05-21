@@ -18,10 +18,14 @@ struct Symbol {
 class Parser
 {
 public:
-	stack<Symbol> symbol;//符号栈
-	stack<TreeNode**> tree;//语法树栈
-
+	/*Parse过程中使用到的数据结构*/
+	TreeNode* root;					//语法树根
+	stack<Symbol> symbol;			//符号栈
+	stack<TreeNode**> tree;			//语法树栈
+	stack<TreeNode*> opstack;		//操作符栈
+	stack<TreeNode*> numstack;		//操作树栈
 	//Parse过程中使用到的变量
+	bool Error;
 	int lineno;				
 
 	/*当前单词*/

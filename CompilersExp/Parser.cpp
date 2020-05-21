@@ -7,28 +7,29 @@ Parser::Parser() {
 	this->symbol = symbol;
 	stack<TreeNode**> tree;
 	this->tree = tree;
+	stack<TreeNode*> opstack;
+	this->opstack = opstack;
+	stack<TreeNode*> numstack;
+	this->numstack = numstack;
 }
 
 void Parser::Parse(vector<Token>& Tokenlist)
 {
+	this->Error = false;
 	int t[67][42];
 	LL1_init(t);
 	this->symbol.push(Program);//可以直接压入vt或lextape，会自动调用构造函数
-	TreeNode* root = new TreeNode();
-	root->nodekind = ProK;
-	TreeNode** tempptrtoTreeNodeptr = &root->child[2];
-	this->tree.push(tempptrtoTreeNodeptr);
-	tempptrtoTreeNodeptr = &root->child[1];
-	this->tree.push(tempptrtoTreeNodeptr);
-	tempptrtoTreeNodeptr = &root->child[0];
-	this->tree.push(tempptrtoTreeNodeptr);
+	this->root = new TreeNode();
+	this->root->nodekind = ProK;
+	this->tree.push(&(this->root->child[2]));
+	this->tree.push(&(this->root->child[1]));
+	this->tree.push(&(this->root->child[0]));
 
-	for (std::vector<Token>::iterator it = Tokenlist.begin(); it != Tokenlist.end(); ++it) {
-		//记录当前行号
-		Token token = *it;
+	std::vector<Token>::iterator Tokeniterator = Tokenlist.begin();
+	while (Tokeniterator != Tokenlist.end() && this->Error == false) {
+		Token token = *Tokeniterator;
 		this->lineno = token.line;
 		int lineno = token.line;
-		//判断符号栈是否为空
 		if (this->symbol.empty()) {
 			if (token.type == ENDFILE) {
 				cout << "语法分析结束，未发现错误" << endl;
@@ -36,31 +37,39 @@ void Parser::Parse(vector<Token>& Tokenlist)
 			}
 			else {
 				cout << "行数：" << lineno << "文件提前结束" << endl;
-				exit(0);		//error
+				this->Error = true;
 			}
 		}
-		//用curSym接受符号栈顶
-		Symbol curSym = this->symbol.top();
-		//当前栈顶为终极符
-		if (curSym.vt == vt_uninit) {
-			if (curSym.lex == token.type) {
-				this->symbol.pop();
+		else
+		{	//当前栈顶为终极符
+			Symbol curSym = this->symbol.top();
+			if (curSym.vt == vt_uninit) {
+				if (curSym.lex == token.type) {
+					this->symbol.pop();
+					Tokeniterator++;			//读取下一个token
+				}
+				else {
+					cout << "行数：" << lineno << "    非期望单词错" << endl;
+					this->Error = true;
+				}
 			}
+			//当前栈顶为非终极符
 			else {
-				cout << "行数：" << lineno << "    非期望单词错" << endl;
-				exit(0);		//error
+				this->symbol.pop();
+				int pnum = t[curSym.vt][token.type];
+				if (pnum == -1) {
+					cout << "行数：" << lineno << "    没有相应产生式，错误" << endl;
+					this->Error = true;
+				}
+				this->predict(pnum);
 			}
 		}
-		//当前栈顶为非终极符
-		else {
-			int pnum = t[curSym.vt][token.type];
-			if (pnum == -1) {
-				cout << "行数：" << lineno << "    没有相应产生式，错误" << endl;
-				exit(0);		//error
-			}
-			this->predict(pnum);
-		}
+
 	}
+
+	if (Tokeniterator == Tokenlist.end()&& this->Error == false)
+		cout << "行数：" << lineno << "    Token遍历完成" << endl;
+	
 }
 
 void Parser::predict(int pnum) {
