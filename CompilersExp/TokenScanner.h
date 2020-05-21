@@ -1,16 +1,18 @@
 #pragma once
-#include "token.h"
+#ifndef _TOKENSCANNER_H
+#define _TOKENSCANNER_H
+#include "Token.h"
 
 static struct
 {
 	string str;
 	LexType tok;
 } reservedWords[21]
-= { {"program",PROGRAM},{"type",TYPE},{"var",VAR},{"procedure",PROCEDURE}
-   ,{"begin",BEGIN},{"end",END},{"array",ARRAY},{"of",OF},{"record",RECORD}
-   ,{"if",IF},{"then",THEN},{"else",ELSE},{"fi",FI},{"while",WHILE}
-   ,{"do",DO},{"endwh",ENDWH},{"read",READ},{"write",WRITE},{"return",RETURN}
-   ,{"integer",INTEGER},{"char",CHAR} };
+= { { "program",PROGRAM },{ "type",TYPE },{ "var",VAR },{ "procedure",PROCEDURE }
+,{ "begin",BEGIN },{ "end",END },{ "array",ARRAY },{ "of",OF },{ "record",RECORD }
+,{ "if",IF },{ "then",THEN },{ "else",ELSE },{ "fi",FI },{ "while",WHILE }
+,{ "do",DO },{ "endwh",ENDWH },{ "read",READ },{ "write",WRITE },{ "return",RETURN }
+,{ "integer",INTEGER },{ "char",CHAR } };
 
 
 typedef enum
@@ -20,10 +22,10 @@ typedef enum
 StateType;
 
 
-class TokenScanner 
+class TokenScanner
 {
 public:
-	Token* Scan(FILE* f);
+	Token * Scan(FILE* f);
 	LexType ReservedLookup(string str);			//判断是是否为保留字
 
 	int Line = 1;
@@ -33,3 +35,4 @@ public:
 	bool Error = false;
 };
 
+#endif

@@ -18,6 +18,22 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\LL1_table.cpp" />
+    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\main.cpp" />
+    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\Parser.cpp" />
+    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\stdafx.cpp" />
+    <ClCompile Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\TokenScanner.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\LL1_table.h" />
+    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\Parser.h" />
+    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\stdafx.h" />
+    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\targetver.h" />
+    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\Token.h" />
+    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\TokenScanner.h" />
+    <ClInclude Include="C:\Users\miemiemie\Documents\Tencent Files\1206198069\FileRecv\Compilers5-21-18-03\Compilers\TreeNode.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{B2643255-548A-44CD-8366-232094C852CC}</ProjectGuid>
@@ -146,16 +162,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Token.cpp" />
-    <ClCompile Include="TokenScanner.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="TokenScanner.h" />
-    <ClInclude Include="Token.h" />
-    <ClInclude Include="Global.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

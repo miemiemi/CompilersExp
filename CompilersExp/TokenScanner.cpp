@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "TokenScanner.h"
 
 
@@ -19,13 +20,13 @@ Token* TokenScanner::Scan(FILE* f)
 		case START:
 			str += c;		//增加长度
 
-			if (isdigit(c)) 
+			if (isdigit(c))
 				state = INNUM;
-			else if (isalpha(c)) 
+			else if (isalpha(c))
 				state = INID;
-			else if (c == ':') 
+			else if (c == ':')
 				state = INASSIGN;
-			else if (c == '.') 
+			else if (c == '.')
 				state = INRANGE;
 			else if (c == '\'')
 			{
@@ -48,7 +49,7 @@ Token* TokenScanner::Scan(FILE* f)
 				switch (c)
 				{
 					/* 当前字符c为EOF,字符存储标志save设置为FALSE,无需存储     *
-					 * 当前识别单词返回值currentToken设置为文件结束单词ENDFILE */
+					* 当前识别单词返回值currentToken设置为文件结束单词ENDFILE */
 				case EOF:
 					str = str.substr(0, str.length() - 1);
 					tokenptr->type = ENDFILE;
@@ -86,7 +87,7 @@ Token* TokenScanner::Scan(FILE* f)
 				case ',':
 					tokenptr->type = COMMA;
 					break;
-				
+
 				case '[':
 					tokenptr->type = LMIDPAREN;
 					break;
@@ -101,7 +102,7 @@ Token* TokenScanner::Scan(FILE* f)
 				}
 			}
 			break;
-		/********** 当前状态为开始状态START的处理结束 **********/
+			/********** 当前状态为开始状态START的处理结束 **********/
 		case INCOMMENT:
 			if (c == EOF)
 			{
@@ -114,7 +115,7 @@ Token* TokenScanner::Scan(FILE* f)
 			else if (c == '}')
 				state = START;
 			break;
-		/********** 当前状态为注释状态INCOMMENT的处理结束 **********/
+			/********** 当前状态为注释状态INCOMMENT的处理结束 **********/
 		case INASSIGN:
 			str += c;
 			state = DONE;
@@ -125,13 +126,13 @@ Token* TokenScanner::Scan(FILE* f)
 
 			else
 			{
-				fseek(f,-1, SEEK_CUR);
+				fseek(f, -1, SEEK_CUR);
 				str = str.substr(0, str.length() - 1);
 				tokenptr->type = ERROR;
 				Error = true;
 			}
 			break;
-		/********** 当前状态为赋值状态INASSIGN的处理结束 **********/
+			/********** 当前状态为赋值状态INASSIGN的处理结束 **********/
 		case INRANGE:
 			str += c;
 			state = DONE;
@@ -193,7 +194,7 @@ Token* TokenScanner::Scan(FILE* f)
 				tokenptr->type = ID;
 			}
 			break;
-		case DONE:	
+		case DONE:
 			break;
 		default:
 			//fprintf(listing, "Scanner Bug: state= %d\n", state);
@@ -211,7 +212,7 @@ Token* TokenScanner::Scan(FILE* f)
 			tokenptr->type = ReservedLookup(str);
 			if (tokenptr->type == ID)
 				tokenptr->content = str;
-				//strcpy(tokenString, tokenString);
+			//strcpy(tokenString, tokenString);
 		}
 		tokenptr->line = Line;
 	}
@@ -220,8 +221,8 @@ Token* TokenScanner::Scan(FILE* f)
 
 LexType TokenScanner::ReservedLookup(string str)
 {
-	for(int i = 0; i < 21; i++)
-		if(str == reservedWords[i].str)
+	for (int i = 0; i < 21; i++)
+		if (str == reservedWords[i].str)
 			return reservedWords[i].tok;
 	return ID;
 }
