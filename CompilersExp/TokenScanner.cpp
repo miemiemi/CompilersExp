@@ -215,6 +215,7 @@ Token* TokenScanner::Scan(FILE* f)
 			//strcpy(tokenString, tokenString);
 		}
 		tokenptr->line = Line;
+		tokenptr->content = str;
 	}
 	return tokenptr;
 }
