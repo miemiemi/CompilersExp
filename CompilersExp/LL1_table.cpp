@@ -203,6 +203,7 @@ void LL1_init(int t[67][42]) {
 	t[VariMore][END] = 93;
 	t[VariMore][SEMI] = 93;
 	t[VariMore][COMMA] = 93;
+	t[VariMore][RMIDPAREN] = 93;
 	t[VariMore][LMIDPAREN] = 94;
 	t[VariMore][DOT] = 95;
 	t[FieldVar][ID] = 96;

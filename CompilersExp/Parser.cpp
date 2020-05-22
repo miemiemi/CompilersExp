@@ -39,7 +39,7 @@ void Parser::Parse(vector<Token>& Tokenlist)
 	this->tree.push(&(this->root->child[0]));
 
 	std::vector<Token>::iterator Tokeniterator = Tokenlist.begin();
-	while (!this->symbol.empty() && this->Error == false){
+	while (!this->symbol.empty() && this->Error == false) {
 		this->currentToken = *Tokeniterator;
 		this->lineno = currentToken.line;
 		int lineno = currentToken.line;
@@ -79,7 +79,7 @@ void Parser::Parse(vector<Token>& Tokenlist)
 		}
 	}
 	Token token = *Tokeniterator;
-	if (token.type == ENDFILE&&this->symbol.empty()&& this->Error == false)
+	if (token.type == ENDFILE && this->symbol.empty() && this->Error == false)
 	{
 		cout << "语法分析结束，未发现错误" << endl;
 		exit(0);
@@ -328,7 +328,7 @@ void Parser::process2()
 	symbol.push(PROGRAM);
 	TreeNode** t = tree.top();
 	tree.pop();
-	currentP = new TreeNode(this->lineno,PheadK);
+	currentP = new TreeNode(this->lineno, PheadK);
 	*(t) = currentP;
 }
 
@@ -357,7 +357,7 @@ void Parser::process5()
 //产生式： <TypeDec> ::= TypeDeclaration 
 void Parser::process6()
 {
-	symbol.push(TypeDeclaration);	
+	symbol.push(TypeDeclaration);
 }
 
 //产生式： <TypeDeclaration> :: = TYPE TypeDecList
@@ -662,8 +662,6 @@ void Parser::process41()
 	symbol.push(ProcBody);
 	symbol.push(ProcDecPart);
 	symbol.push(SEMI);
-	symbol.push(BaseType);
-	symbol.push(COLON);
 	symbol.push(RPAREN);
 	symbol.push(ParamList);
 	symbol.push(LPAREN);

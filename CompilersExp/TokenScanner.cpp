@@ -210,7 +210,7 @@ Token* TokenScanner::Scan(FILE* f)
 		if (tokenptr->type == ID)
 		{
 			tokenptr->type = ReservedLookup(str);
-			if (tokenptr->type == ID)
+			if (tokenptr->type == ID)		//写完我再来改 这地方逻辑有点问题但是不影响结果
 				tokenptr->content = str;
 			//strcpy(tokenString, tokenString);
 		}

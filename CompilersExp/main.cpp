@@ -22,7 +22,7 @@ static string 词法类型[100] = { "ENDFILE", "ERROR" ,
 int main()
 {
 	FILE* fp;
-	if ((fp = fopen("SNLtest.txt", "r")) == NULL)
+	if ((fp = fopen("C1.txt", "r")) == NULL)
 	{
 		printf("文件打开失败\n");
 		exit(1);
