@@ -82,7 +82,6 @@ void Parser::Parse(vector<Token>& Tokenlist)
 	if (token.type == ENDFILE && this->symbol.empty() && this->Error == false)
 	{
 		cout << "语法分析结束，未发现错误" << endl;
-		exit(0);
 	}
 }
 
@@ -309,6 +308,247 @@ int Parser::Priosity(LexType op) {
 		return 3;
 	else
 		return -1;
+}
+
+void Parser::PrintTree(TreeNode* treenode)
+{
+	int j;
+	/* 增量缩进宏,每次进入语法树节点都进行增量缩进 */
+	this->indentation+= 4;
+	while (treenode!=NULL)
+	{
+		if ((int)(treenode->lineno == 0))
+			cout << "         "; //9个空格
+		else
+			switch(treenode->lineno / 10){
+			case 0:
+				cout << "line:" << treenode->lineno<<"   ";
+				break;
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+			case 9:
+				cout << "line:" << treenode->lineno << "  ";
+				break;
+			default:
+				cout << "line:" << treenode->lineno << "  ";
+				break;
+			}
+
+		string space(this->indentation, ' ');	//打印相应的空格,进行缩进
+		cout << space;
+
+		switch (treenode->nodekind)
+		{
+			case ProK:
+				cout << "ProK  ";
+				break;
+			case PheadK:
+				cout << "PheadK  " << treenode->name[0] << "  ";
+				break;
+			case DecK:
+			{
+				cout << "DecK  ";
+				if (treenode->attr.procAttr.paramt == varparamtype)
+					cout << "var param:  ";
+				if (treenode->attr.procAttr.paramt == valparamtype)
+					cout << "value param:  ";
+				switch (treenode->kind.dec)
+				{
+				case  ArrayK:
+				{
+					cout << "ArrayK  ";
+					cout << treenode->attr.arrayAttr.up << "  ";
+					cout << treenode->attr.arrayAttr.low << "  ";
+					if (treenode->attr.arrayAttr.childType == CharK)
+						cout << "Chark  ";
+					else if (treenode->attr.arrayAttr.childType == CharK)
+						cout << "IntegerK  ";
+				}; break;
+				case  CharK:
+					cout << "CharK  ";
+					break;
+				case  IntegerK:
+					cout << "IntegerK  ";
+					break;
+				case  RecordK:
+					cout << "RecordK  ";
+					break;
+				case  IdK:
+					cout << "IdK  ";
+					cout << treenode->type_name<<"  ";
+					break;
+				default:
+					cout << "error1";
+					this->Error = true;
+				};
+				if (treenode->idnum != 0)
+					for (int i = 0; i <= (treenode->idnum); i++)
+						cout << treenode ->name[i]<<"  ";
+				else
+				{
+					cout << "wrong!no var!\n";
+					this->Error = true;
+				}
+			}
+			break;
+			case TypeK:
+				cout << "TypeK  ";
+				break;
+			case VarK:
+				cout << "VarK  ";
+				//if (treenode->table[0] != NULL) {
+				//	cout << "TypeK  ";
+				//	//fprintf(listing, "%d  %d  ", tree->table[0]->attrIR.More.VarAttr.off, tree->table[0]->attrIR.More.VarAttr.level);
+				//}
+				break;
+			case ProcDecK:
+				cout << "ProcDecK  ";
+				cout << treenode->name[0]<<"  ";
+				//if (tree->table[0] != NULL)
+				break;
+			case StmLK:
+				cout << "StmLk  ";
+				break;
+			case StmtK:
+			{
+				cout << "StmtK  ";
+				switch (treenode->kind.stmt)
+				{
+				case IfK:
+					cout << "If  ";
+					break;
+				case WhileK:
+					cout << "While  ";
+					break;
+				case AssignK:
+					cout << "Assign  ";
+					break;
+				case ReadK:
+					cout << "Read  ";
+					cout << treenode->name[0] << "  ";
+				/*	if (tree->table[0] != NULL)
+						fprintf(listing, "%d   %d  ", tree->table[0]->attrIR.More.VarAttr.off, tree->table[0]->attrIR.More.VarAttr.level);*/
+					break;
+				case WriteK:
+					cout << "Write  ";
+					break;
+				case CallK:
+					cout << "Call  ";
+					cout << treenode->name[0] << "  ";
+					break;
+				case ReturnK:
+					cout << "Return  ";
+					break;
+				default:
+					cout << "error2!";
+					this->Error = true;
+					break;
+				}
+			}break;
+			case ExpK:
+			{
+				cout << "ExpK  ";
+				switch (treenode->kind.exp)
+				{
+				case OpK:
+				{
+					cout << "Op  ";
+					switch (treenode->attr.expAttr.op)
+					{
+					case EQ:   
+						cout << "=  ";break;
+					case LT:   
+						cout << "<  "; break; 
+					case PLUS: 
+						cout << "+  "; break; 
+					case MINUS:
+						cout << "-  "; break; 
+					case TIMES:
+						cout << "*  "; break; 
+					case OVER: 
+						cout << "/  "; break;
+					default:
+						cout << "error3!";
+						this->Error = true;
+						break;
+					}
+				if (treenode->attr.expAttr.varkind == ArrayMembV)
+				{
+					cout << "ArrayMember  ";
+					cout << treenode->name[0] << "  ";
+				}
+				}; break;	//case ExpK:
+				case ConstK:
+					cout << "Const  ";
+					switch (treenode->attr.expAttr.varkind)
+					{
+					case IdV:
+						cout << "Id  ";
+						cout << treenode->name[0] << "  ";
+						break;
+					case FieldMembV:
+						cout << "FieldMember  ";
+						cout << treenode->name[0] << "  ";
+						break;
+					case ArrayMembV:
+						cout << "ArrayMember  ";
+						cout << treenode->name[0] << "  ";
+						break;
+					default:
+						cout << "var type error!";
+						this->Error = true;
+						break;
+					}
+					cout << treenode->attr.expAttr.val << "  ";
+					break;
+				case IdeK:
+					cout << "IdeK  ";
+					switch (treenode->attr.expAttr.varkind)
+					{
+					case IdV:
+						cout << "Id  ";
+						cout << treenode->name[0] << "  ";
+						break;
+					case FieldMembV:
+						cout << "FieldMember  ";
+						cout << treenode->name[0] << "  ";
+						break;
+					case ArrayMembV:
+						cout << "ArrayMember  ";
+						cout << treenode->name[0] << "  ";
+						break;
+					default:
+						cout << "var type error!";
+						this->Error = true;
+						break;
+					}
+					/*if (tree->table[0] != NULL)
+						fprintf(listing, "%d   %d  ", tree->table[0]->attrIR.More.VarAttr.off, tree->table[0]->attrIR.More.VarAttr.level);*/
+					break;
+				default:
+					cout << "error4!";
+					this->Error = true;
+					break;
+				}
+			}break;
+			default:
+				cout << "error5!";
+				this->Error = true;
+				break;
+		}
+		cout << "\n";
+		for (j = 0; j < 3; j++)
+			PrintTree(treenode->child[j]);
+		treenode = treenode->sibling;
+	}
+	/* 减量缩进宏,每次退出语法树节点时减量缩进 */
+	this->indentation-=4;
 }
 
 //产生式： <Program>  :: = ProgramHead  DeclarePart  ProgramBody

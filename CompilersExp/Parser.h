@@ -25,18 +25,16 @@ public:
 	stack<TreeNode*> opstack;		//操作符栈
 	stack<TreeNode*> numstack;		//操作树栈
 	//Parse过程中使用到的变量
-	bool Error;
-	int lineno;				
+	bool Error;					//是否发生错误
+	int lineno;			
 
-	/*当前单词*/
 	Token  currentToken;
+	TreeNode* currentP;			//纪录当前语法树节点
+	TreeNode* saveP;			//保存当前指针，以便修改后，将其恢复
+	Dec* dectemp;				//指向某语法树节点Kind->dec域的指针
+	
+	int indentation = 0;
 
-	/*纪录当前语法树节点*/
-	TreeNode* currentP;
-	/*保存当前指针，以便修改后，将其恢复*/
-	TreeNode* saveP;
-	/*指向某语法树节点Kind->dec域的指针*/
-	Dec* dectemp;
 	/*纪录表达式中，未匹配的左括号数目*/
 	int  expflag;
 
@@ -52,10 +50,15 @@ public:
 	int  getExpResult2;
 
 	Parser();
+	//语法分析主要过程
 	void Parse(vector<Token>& Tokenlist);
 	void predict(int pnum);
 	int Priosity(LexType op);
 
+	//语法树打印
+	void PrintTree(TreeNode* treenode);
+
+	//产生式处理函数:
 	void process1();
 	void process2();
 	void process3();

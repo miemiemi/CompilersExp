@@ -48,6 +48,6 @@ int main()
 
 	Parser* parser = new Parser();
 	parser->Parse(Tokenlist);
-
+	parser->PrintTree(parser->root);
 	return 0;
 }
