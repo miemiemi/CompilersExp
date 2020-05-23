@@ -671,7 +671,6 @@ void Parser::process41()
 	TreeNode** t = tree.top();
 	tree.pop();
 	(*t) = currentP;
-	tree.push(&(currentP->sibling));
 	tree.push(&(currentP->child[2]));
 	tree.push(&(currentP->child[1]));
 	tree.push(&(currentP->child[0]));
