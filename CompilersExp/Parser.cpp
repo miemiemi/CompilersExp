@@ -869,7 +869,7 @@ void Parser::process35()
 }
 void Parser::process36()
 {
-	symbol.push(IdMore);
+	symbol.push(VarIdMore);
 	symbol.push(ID);
 	currentP->name[currentP->idnum] = currentToken.content;
 	currentP->idnum++;
@@ -915,7 +915,6 @@ void Parser::process41()
 	tree.push(&(currentP->child[2]));
 	tree.push(&(currentP->child[1]));
 	tree.push(&(currentP->child[0]));
-	saveP = currentP;
 }
 
 void Parser::process42()
@@ -954,7 +953,6 @@ void Parser::process47()
 void Parser::process48()
 {
 	tree.pop();
-	currentP = saveP;
 }
 
 void Parser::process49()
@@ -1107,7 +1105,9 @@ void Parser::process66()
 	symbol.push(AssCall);
 	symbol.push(ID);
 	currentP = new TreeNode(currentToken.line, StmtK);
-	TreeNode* t = new TreeNode(currentToken.line, VarK);
+	currentP->kind.stmt = AssignK;
+	TreeNode* t = new TreeNode(currentToken.line, ExpK);
+	t->kind.exp = IdeK;
 	t->name[0] = currentToken.content;
 	t->idnum++;
 	currentP->child[0] = t;
@@ -1126,6 +1126,7 @@ void Parser::process67()
 void Parser::process68()
 {
 	symbol.push(CallStmRest);
+	currentP->child[0]->attr.expAttr.varkind = IdV;
 	currentP->kind.stmt = CallK;
 }
 
@@ -1141,7 +1142,7 @@ void Parser::process69()
 	t->attr.expAttr.op = END;
 	t->attr.expAttr.varkind = IdV;
 	t->attr.expAttr.type = Void;
-	
+
 	opstack.push(t);
 }
 
@@ -1340,7 +1341,7 @@ void Parser::process83()
 void Parser::process84()
 {
 	if ((currentToken.type == RPAREN) && (expflag != 0))
-		/*当前token为右括号)而且expflag为0*/
+		/*当前token为右括号)而且expflag不为0*/
 	{
 		while (opstack.top()->attr.expAttr.op != LPAREN)
 			/* 操作符栈顶不是左括号( */
@@ -1348,9 +1349,9 @@ void Parser::process84()
 			TreeNode* t = opstack.top();
 			opstack.pop();
 			TreeNode* Rnum = numstack.top();
-			opstack.pop();
+			numstack.pop();
 			TreeNode* Lnum = numstack.top();
-			opstack.pop();
+			numstack.pop();
 
 			t->child[0] = Lnum;
 			t->child[1] = Rnum;
@@ -1422,9 +1423,9 @@ void Parser::process85()
 		TreeNode* t = opstack.top();
 		opstack.pop();
 		TreeNode* Rnum = numstack.top();
-		opstack.pop();
+		numstack.pop();
 		TreeNode* Lnum = numstack.top();
-		opstack.pop();
+		numstack.pop();
 		t->child[0] = Lnum;
 		t->child[1] = Rnum;
 		numstack.push(t);
