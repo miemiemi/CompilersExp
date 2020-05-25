@@ -51,7 +51,6 @@ Token* TokenScanner::Scan(FILE* f)
 					/* 当前字符c为EOF,字符存储标志save设置为FALSE,无需存储     *
 					* 当前识别单词返回值currentToken设置为文件结束单词ENDFILE */
 				case EOF:
-					str = str.substr(0, str.length() - 1);
 					tokenptr->type = ENDFILE;
 					break;
 				case '=':
@@ -108,7 +107,6 @@ Token* TokenScanner::Scan(FILE* f)
 			{
 				state = DONE;
 				tokenptr->type = ENDFILE;
-
 			}
 
 			/* 当前字符c为"}",注释结束.当前DFA状态state设置为开始状态START */
@@ -142,9 +140,11 @@ Token* TokenScanner::Scan(FILE* f)
 
 			else
 			{
-				fseek(f, -1, SEEK_CUR);
-				str = str.substr(0, str.length() - 1);
-				tokenptr->type = DOT;
+				if (c != EOF) {
+					fseek(f, -1, SEEK_CUR);
+					str = str.substr(0, str.length() - 1);
+					tokenptr->type = DOT;
+				}
 			}
 			break;
 		case INNUM:
