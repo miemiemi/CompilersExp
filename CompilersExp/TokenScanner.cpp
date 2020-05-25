@@ -143,8 +143,8 @@ Token* TokenScanner::Scan(FILE* f)
 				if (c != EOF) {
 					fseek(f, -1, SEEK_CUR);
 					str = str.substr(0, str.length() - 1);
-					tokenptr->type = DOT;
 				}
+				tokenptr->type = DOT;
 			}
 			break;
 		case INNUM:

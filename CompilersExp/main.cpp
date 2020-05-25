@@ -22,7 +22,7 @@ static string 词法类型[100] = { "ENDFILE", "ERROR" ,
 int main()
 {
 	FILE* fp;
-	if ((fp = fopen("C1.txt", "r")) == NULL)
+	if ((fp = fopen("C:\\Users\\miemiemie\\Desktop\\实验报告\\SNL语言例子\\一般例子\\C4.txt", "r")) == NULL)
 	{
 		printf("文件打开失败\n");
 		exit(1);
@@ -42,6 +42,13 @@ int main()
 		newtoken = NULL;
 	}
 	fclose(fp);
+	if (Tokenlist.back().type == DOT) {
+		Token* endfileTolen = new Token();
+		endfileTolen->line = TScanner->Line;
+		endfileTolen->content = "";
+		endfileTolen->type = ENDFILE;
+		Tokenlist.push_back(*endfileTolen);
+	}
 	for (Token t : Tokenlist) {
 		if (t.type == ID)
 			cout << "行数: " << t.line << "    " << t.type << "     " << t.content << endl;
