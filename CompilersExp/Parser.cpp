@@ -912,6 +912,8 @@ void Parser::process41()
 	tree.pop();
 	(*t) = currentP;
 
+	tree.push(&(currentP->sibling));
+
 	tree.push(&(currentP->child[2]));
 	tree.push(&(currentP->child[1]));
 	tree.push(&(currentP->child[0]));
@@ -1515,7 +1517,6 @@ void Parser::process90()
 	t->attr.expAttr.type = Void;
 	t->attr.expAttr.val = std::stoi(currentToken.content);
 
-	/*常数节点入操作数栈*/
 	numstack.push(t);
 }
 

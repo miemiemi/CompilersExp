@@ -36,18 +36,18 @@ public:
 	int indentation = 0;
 
 	/*纪录表达式中，未匹配的左括号数目*/
-	int  expflag;
+	int  expflag = 0;
 
 	/*判断简单表达式处理结束，整个表达式是否处理结束标识*/
 	/*当是条件表达式时，取假值，简单表达式时，取真值*/
 	/*用于函数preocess84*/
-	int  getExpResult;
+	int  getExpResult = 1;
 
 	/*仅用于数组变量，故初始化为假，遇到数组变量时，将其
 	  改变为真，以便在函数process84中，即算术表达式结束时，
 	  从语法树栈中弹出相应指针，将数组下标表达式的结构链入
 	  节点中*/
-	int  getExpResult2;
+	int  getExpResult2 = 0;
 
 	Parser();
 	//语法分析主要过程

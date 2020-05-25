@@ -35,10 +35,13 @@ int main()
 	{
 		newtoken = TScanner->Scan(fp);
 		Tokenlist.push_back(*newtoken);
+		if (TScanner->Error == true) {
+			cout << "Error token  " << newtoken->content << endl;
+			exit(1);
+		}
 		newtoken = NULL;
 	}
 	fclose(fp);
-
 	for (Token t : Tokenlist) {
 		if (t.type == ID)
 			cout << "ÐÐÊý: " << t.line << "    " << t.type << "     " << t.content << endl;
